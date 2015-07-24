@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery UI Tabs - Collapse content</title>
+<link rel="stylesheet" href="jquery-ui-1.9.2.custom/css/ui-darkness/jquery-ui-1.9.2.custom.min.css">
+<script src="jquery-ui-1.9.2.custom/js/jquery-1.8.3.js"></script>
+<script src="jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script>
+    $(function() {
+
+        jQuery.support.cors = true;
+        initTabs("tabs", document.getElementById("body"));
+
+        /*
+        $("#tabs").tabs({
+        beforeLoad: function(event, ui) {
+        ui.jqXHR.fail(function() {
+        ui.panel.html(
+        "Couldn't load this tab. We'll try to fix this as soon as possible. " +
+        "If this wouldn't be a demo.");
+        });
+        }
+        });
+        $("#tabs-1").resizable();
+        //$("iframe1").*/
+    });
+   
+    function initTabs(tabsId,node) {
+
+
+        var parentNode = $(node);
+        var adressBarTemplate = "<input id='url' type='text' value='http://www.baidu.com'>";
+        var tabsTemplate = "\
+            <div id='" + tabsId + "' class='tabs'>\
+            <ul>\
+            <li><a href='#tabs-1'>tab</a><span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span> </li>\
+            </ul>\
+            <div id='tabs-1' class='tab'>\
+            <iframe id='iframe1' src='http://10.252.34.32' class='contentsIframe'></iframe>\
+            </div>\
+            </div>";
+        var adressBar = $(adressBarTemplate);
+        var tabs = $(tabsTemplate).tabs({
+            heightStyle: "content"
+        });
+        parentNode.append(adressBar);
+        parentNode.append(tabs);
+
+        tabCounter = 1;
+        tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>"
+
+        function addTab(tabTitle,url) {
+            var label = tabTitle || "Tab " + (tabCounter + 1);
+            var id = "tabs-" + (tabCounter+1);
+            var li = $(tabTemplate.replace(/#\{href\}/g, "#" + id).replace(/#\{label\}/g, label));
+            //tabContentHtml = tabContent || "Tab " + (tabCounter+1) + " content.";
+            tabs.find(".ui-tabs-nav").append(li);
+            tabs.append("<div id='" + id + "' class='tab'>" + "<iframe id='iframe" + (tabCounter + 1) + "' src='" + url + "' class='contentsIframe'></iframe>" + "</div>");
+            $("#" + id).resizable({
+              handles: "s"
+            });
+            tabs.tabs("refresh");
+            tabCounter++;
+        }
+
+        function removeTab(tabId) { 
+            
+        }
+
+        tabs.delegate("span.ui-icon-close", "click", function() {
+            var panelId = $(this).closest("li").remove().attr("aria-controls");
+            $("#" + panelId).remove();
+            tabs.tabs("refresh");
+            tabCounter--;
+        });
+
+        //addTab("title", "http://www.baidu.com");
+        adressBar.on("keyup", function(event) {
+            if (event.keyCode == 13) {
+                //alert(adressBar.val());
+                addTab(null, adressBar.val());
+            }
+        }) 
+        
+    }
+    
+</script>
+
+<style type="text/css">
+  body{height:100%; }
+  .tabs{height:100%; }
+  .tab{height:600px; }
+  .contentsIframe {height:100%; width:100%; margin:0%; padding:0%; background-color:yellow;scrolling:auto;}
+</style>
+
+</head>
+
+<body id="body">
+</body>
+</html>
