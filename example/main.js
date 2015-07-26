@@ -1,7 +1,7 @@
 define(function(require, exports, module){
 	
 require("jquery");
-var UrlBarIframe=require("./urlBarIframe.js");
+var UrlBarIframe=require("modulePath/urlBarIframe.js");
 
 module.exports=main;
 	

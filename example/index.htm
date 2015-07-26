@@ -19,14 +19,15 @@
 seajs.config({
 	"base":"./",
 	"paths":{
-		"libPath":"../lib"
+		"libPath":"../lib",
+		"modulePath":"./"
 	},
 	"alias": {
 		"jquery":"libPath/jquery-ui-1.9.2.custom/js/jquery-1.8.3.js",
 		"jqueryUi":"libPath/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js"
 	}
 })
-seajs.use('./main.js',function(main) {
+seajs.use('main.js',function(main) {
   main();
 });
 /*
