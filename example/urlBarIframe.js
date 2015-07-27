@@ -80,6 +80,16 @@ UrlBarIframe.prototype.config={
 	}	
 };
 
+//UrlBarIframeµÄHTMLÄ£°åÅäÖÃ
+UrlBarIframe.prototype.templateConfig={	
+	"path":"./template/urlBarIframe.htm",
+	"templateId":{
+		"urlBar":"urlBar",
+		"button":"button",
+		"iframe":"iframe"
+	}	
+};
+
 UrlBarIframe.prototype.load=function(url){
 	//alert(url);
 	//this.iframe.attr("src",url);
